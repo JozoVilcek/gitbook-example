@@ -6,11 +6,20 @@ This is an example on how [GitBook](https://github.com/GitbookIO/gitbook)
 
 ## How to run it?
 
-Everything is managed by gradle. To build documentation run:
+To make things (hopefully) easier, everything is managed by gradle. No need to setup anything locally.
+
+To build the book, run:
 
 ```
-cd gitbook-example
-./gradlew clean buildDocs
+./gradlew buildDocs
 ```
 
-Generated book will appear in `./build/docs/` folder.
+and generated book will appear in `./build/docs/` folder. When you open the book, e.g. search will not be working (off course). We need a server for that.
+
+To serve the book, run:
+
+```
+./gradlew serveDocs
+```
+
+and watch the console for hint where the book can be reached.
