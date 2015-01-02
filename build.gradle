@@ -1,0 +1,50 @@
+
+plugins {
+    id "com.moowork.node" version "0.8"
+}
+
+apply plugin: 'com.moowork.node'
+apply plugin: 'java'
+
+sourceSets {
+    examples
+}
+
+node {
+    // Version of node to use.
+    version = '0.11.14'
+
+    // Version of npm to use.
+    npmVersion = '2.1.5'
+
+    // Base URL for fetching node distributions (change if you have a mirror).
+    distBaseUrl = 'http://nodejs.org/dist'
+
+    // If true, it will download node using above parameters.
+    // If false, it will try to use globally installed node.
+    download = true
+    workDir = file("${project.buildDir}/nodejs")
+}
+
+
+task buildDocs(type: NodeTask, dependsOn: 'npmInstall') {
+
+    inputs.dir('${project.projectDir}/src/examples')
+
+    script = file('node_modules/gitbook/bin/gitbook.js')
+    args = ['build', './src/book', "--output=${project.buildDir}/docs", "--verbose"]
+}
+
+
+task serveDocs(type: NodeTask, dependsOn: 'npmInstall') {
+
+    inputs.dir('${project.projectDir}/src/examples')
+
+    script = file('node_modules/gitbook/bin/gitbook.js')
+    args = ['serve', './src/book', "--output=${project.buildDir}/docs", '--verbose']
+}
+
+assemble.dependsOn buildDocs
+buildDocs.dependsOn examplesClasses
+//buildDocs.mustRunAfter examplesClasses
+

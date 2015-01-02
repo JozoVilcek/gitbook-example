@@ -1,0 +1,8 @@
+{
+    "plugins": ["katex", "gitbook-plugin-include", "gitbook-mermaid"],
+    "links": {
+        "sidebar": {
+            "Contact us": "mailto:contact@example.org"
+        }
+    }
+}
