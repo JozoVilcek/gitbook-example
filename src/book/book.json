@@ -1,5 +1,5 @@
 {
-    "plugins": ["katex", "gitbook-plugin-include", "gitbook-mermaid"],
+    "plugins": ["katex", "include", "mermaid"],
     "links": {
         "sidebar": {
             "Contact us": "mailto:contact@example.org"
