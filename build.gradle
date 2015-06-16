@@ -26,8 +26,15 @@ node {
     workDir = file("${project.buildDir}/nodejs")
 }
 
+task installPlugin(type: NpmTask, dependsOn: 'npmInstall') {
 
-task buildDocs(type: NodeTask, dependsOn: 'npmInstall') {
+    inputs.dir("${project.projectDir}/../gitbook-plugin-mermaid")
+
+    //args = ['install', "${project.projectDir}/../gitbook-plugin-mermaid", "--save-dev"]
+    args = ['install', "git://github.com/JozoVilcek/gitbook-plugin-mermaid.git#server-side-diagrams", "--save-dev"]
+}
+
+task buildDocs(type: NodeTask, dependsOn: 'installPlugin') {
 
     inputs.dir('${project.projectDir}/src/examples')
 
@@ -35,6 +42,13 @@ task buildDocs(type: NodeTask, dependsOn: 'npmInstall') {
     args = ['build', './src/book', "--output=${project.buildDir}/docs", "--verbose"]
 }
 
+task buildDocsPdf(type: NodeTask, dependsOn: 'npmInstall') {
+
+    inputs.dir('${project.projectDir}/src/examples')
+
+    script = file('node_modules/gitbook/bin/gitbook.js')
+    args = ['pdf', './src/book', "--output=${project.buildDir}/docs/book.pdf", "--verbose"]
+}
 
 task serveDocs(type: NodeTask, dependsOn: 'npmInstall') {
 
@@ -46,5 +60,4 @@ task serveDocs(type: NodeTask, dependsOn: 'npmInstall') {
 
 assemble.dependsOn buildDocs
 buildDocs.dependsOn examplesClasses
-//buildDocs.mustRunAfter examplesClasses
 

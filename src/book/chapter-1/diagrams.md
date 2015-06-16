@@ -14,6 +14,36 @@ graph LR
     C -->|Two| E[Result two]
 ```
 
+```mermaid
+graph LR
+    id1(Start)-->id2(Stop)
+    style id1 fill:#f9f,stroke:#333,stroke-width:4px;
+    style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
+```
+
+```mermaid
+graph TB
+         subgraph one
+         a1-->a2
+         end
+         subgraph two
+         b1-->b2
+         end
+         subgraph three
+         c1-->c2
+         end
+         c1-->a2
+
+```
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
 or even sequence diagrams:
 
 ```mermaid
