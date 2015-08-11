@@ -12,52 +12,44 @@ sourceSets {
 
 node {
     // Version of node to use.
-    version = '0.11.14'
+    version = '0.12.7'
 
     // Version of npm to use.
-    npmVersion = '2.1.5'
+    npmVersion = '2.11.3'
 
     // Base URL for fetching node distributions (change if you have a mirror).
     distBaseUrl = 'http://nodejs.org/dist'
 
     // If true, it will download node using above parameters.
     // If false, it will try to use globally installed node.
-    download = true
+    download = false
     workDir = file("${project.buildDir}/nodejs")
 }
 
-task installPlugin(type: NpmTask, dependsOn: 'npmInstall') {
 
-    inputs.dir("${project.projectDir}/../gitbook-plugin-mermaid")
-
-    //args = ['install', "${project.projectDir}/../gitbook-plugin-mermaid", "--save-dev"]
-    args = ['install', "git://github.com/JozoVilcek/gitbook-plugin-mermaid.git#server-side-diagrams", "--save-dev"]
-}
-
-task buildDocs(type: NodeTask, dependsOn: 'installPlugin') {
+task buildDocsPdf(type: Exec, dependsOn: 'npmInstall') {
 
     inputs.dir('${project.projectDir}/src/examples')
 
-    script = file('node_modules/gitbook/bin/gitbook.js')
-    args = ['build', './src/book', "--output=${project.buildDir}/docs", "--verbose"]
+    executable = 'node_modules/.bin/gitbook'
+    args = ['pdf', './src/book', "${project.buildDir}/docs/book.pdf", "--verbose"]
 }
 
-task buildDocsPdf(type: NodeTask, dependsOn: 'npmInstall') {
+task buildDocs(type: Exec, dependsOn: 'npmInstall') {
 
     inputs.dir('${project.projectDir}/src/examples')
 
-    script = file('node_modules/gitbook/bin/gitbook.js')
-    args = ['pdf', './src/book', "--output=${project.buildDir}/docs/book.pdf", "--verbose"]
+    executable = 'node_modules/.bin/gitbook'
+    args = ['build', './src/book', "${project.buildDir}/docs", "--verbose"]
 }
 
-task serveDocs(type: NodeTask, dependsOn: 'npmInstall') {
+task serveDocs(type:Exec, dependsOn: 'npmInstall') {
 
     inputs.dir('${project.projectDir}/src/examples')
-
-    script = file('node_modules/gitbook/bin/gitbook.js')
-    args = ['serve', './src/book', "--output=${project.buildDir}/docs", '--verbose']
+    
+    executable = 'node_modules/.bin/gitbook'
+    args = ['serve', './src/book', "${project.buildDir}/docs", '--verbose']
 }
 
 assemble.dependsOn buildDocs
 buildDocs.dependsOn examplesClasses
-
