@@ -43,18 +43,7 @@ graph TD;
     C-->D;
 {% endmermaid %}
 
-or even sequence diagrams:
+or even sequence diagrams and loaded from the file:
 
-{% mermaid %}
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail...
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
+{% mermaid src="./diagram.mermaid" %}
 {% endmermaid %}
