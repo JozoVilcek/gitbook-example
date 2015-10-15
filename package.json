@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "gitbook": "1.3.2",
+    "gitbook-cli": "0.3.4",
     "gitbook-plugin-include": "0.1.0",
-    "gitbook-plugin-katex": "0.2.1",
-    "gitbook-plugin-mermaid": "0.0.3"
+    "gitbook-plugin-katex": "1.0.2",
+    "gitbook-plugin-mermaid": "git://github.com/JozoVilcek/gitbook-plugin-mermaid.git"
   }
 }
